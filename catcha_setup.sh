@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# update apt stuff
+apt-get update
+
 # install git
 apt-get -y install git
 
@@ -10,7 +13,7 @@ apt-get -y install openjdk-7-jdk
 echo "export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64" >> /etc/profile
 
 # install tomcat7
-#apt-get -y install tomcat7 tomcat7-admin
+apt-get -y install tomcat7 tomcat7-admin
 
 # install mysql
 # from https://serversforhackers.com/video/installing-mysql-with-debconf

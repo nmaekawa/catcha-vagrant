@@ -6,18 +6,22 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.network "private_network", ip: "10.10.10.10"
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
+  config.vm.define "catch" do |catch|
+    catch.vm.box = "ubuntu/trusty64"
+    catch.vm.network "private_network", ip: "10.10.10.10"
+    catch.vm.network "forwarded_port", guest: 8080, host: 9089
 
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  config.vm.provider "virtualbox" do |v|
-    v.memory = "2048"
-    #v.gui = true
+    catch.ssh.forward_agent = true
+
+    # Provider-specific configuration so you can fine-tune various
+    # backing providers for Vagrant. These expose provider-specific options.
+    catch.vm.provider "virtualbox" do |v|
+        v.memory = "2048"
+        #v.gui = true
+    end
+
+    # ansible user for provisioning
+    catch.vm.provision "shell", path: "./catcha_setup.sh"
+
   end
-
-  # ansible user for provisioning
-  config.vm.provision "shell", path: "./catcha_setup.sh"
-
 end
